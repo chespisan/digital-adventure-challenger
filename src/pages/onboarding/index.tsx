@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import { ButtonComponent } from "../../common/components";
 
@@ -6,8 +7,12 @@ import "./onboarding.scss";
 
 export const OnboardingPage = () => {
   const navigate = useNavigate();
+  const [_user, setUserCookie] = useCookies(["user"]);
 
   const goToPage = (path: string): void => {
+    if (path === "/home") {
+      setUserCookie("user", { isAuth: true, isProvitional: true });
+    }
     navigate(path);
   };
 
