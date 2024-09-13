@@ -84,7 +84,9 @@ export const HomePage = () => {
           </div>
         ))}
         {gallery?.length === 0 && (
-          <h1 className="home__not-gallery">Ups.... ya vienen en camino!!</h1>
+          <h1 className="home__not-gallery">
+            Ups.... pronto veras lo mas interesante!!
+          </h1>
         )}
       </div>
 

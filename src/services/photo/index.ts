@@ -6,6 +6,7 @@ import { FirebaseService } from "../firebase";
 import { db, storage } from "../../config/firebase";
 import { IUseUser } from "../../common/hooks/use-user/interface";
 import { IPhoto, IPhotoService } from "./interface";
+import { toast } from "sonner";
 
 export class PhotoManagementService implements IPhotoService {
   private static _instance: PhotoManagementService;
@@ -36,7 +37,7 @@ export class PhotoManagementService implements IPhotoService {
         likes: 0,
         isShowGallery: true,
         username: user?.username,
-        usersLikes: [],
+        usersLike: [],
       });
       return { message: "Foto guardada!" };
     } catch (error) {
@@ -83,6 +84,7 @@ export class PhotoManagementService implements IPhotoService {
         message: "Ohhh!",
       };
     } catch (error) {
+      toast.error("Ha ocurrido un error, intenta de nuevo");
       return {
         isError: true,
       };

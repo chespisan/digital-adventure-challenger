@@ -37,7 +37,7 @@ export const PhotoManagementPage = () => {
         setStream(result);
       }
     } catch (error) {
-      console.log("error-show-camera", error);
+      toast.error("Ha ocurrido un error, intenta de nuevo");
     }
   };
 
