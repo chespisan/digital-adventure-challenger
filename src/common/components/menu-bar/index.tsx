@@ -6,6 +6,7 @@ import { AuthService } from "../../../services/auth";
 import { useModalStore } from "../../context/hooks";
 
 import "./menuBar.scss";
+import { toast } from "sonner";
 
 const { logout } = AuthService.getInstance();
 
@@ -26,7 +27,7 @@ export const MenuBarComponent = () => {
       removeTokenCookie("access_token");
       navigate("/onboarding", { replace: true });
     } catch (error) {
-      console.log(`Error logout`, error);
+      toast.error("Ha ocurrido un error, intenta de nuevo");
     }
   };
 

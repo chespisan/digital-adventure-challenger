@@ -6,6 +6,7 @@ import { FirebaseService } from "../firebase";
 import { db, storage } from "../../config/firebase";
 import { IUseUser } from "../../common/hooks/use-user/interface";
 import { IPhoto, IPhotoService } from "./interface";
+import { toast } from "sonner";
 
 export class PhotoManagementService implements IPhotoService {
   private static _instance: PhotoManagementService;
@@ -67,7 +68,6 @@ export class PhotoManagementService implements IPhotoService {
 
       let totalLikes: string[] = [];
       let isDislike = false;
-      console.log("call?");
 
       if (photo?.usersLike?.includes(userId)) {
         isDislike = true;
@@ -84,8 +84,7 @@ export class PhotoManagementService implements IPhotoService {
         message: "Ohhh!",
       };
     } catch (error) {
-      console.log("error: ", error);
-
+      toast.error("Ha ocurrido un error, intenta de nuevo");
       return {
         isError: true,
       };
