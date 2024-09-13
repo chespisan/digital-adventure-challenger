@@ -80,7 +80,7 @@ export class PhotoManagementService implements IPhotoService {
         usersLike: [...totalLikes],
       });
       return {
-        message: "Ohhh!",
+        message: "Like! ;) ",
       };
     } catch (error) {
       return {
