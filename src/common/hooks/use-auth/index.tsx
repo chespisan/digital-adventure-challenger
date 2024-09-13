@@ -12,7 +12,7 @@ export const useAuth = () => {
     if (location.pathname === "/auth") {
       return;
     }
-    navigate("/home");
+    navigate("/home", { replace: true });
   };
 
   const redirectUserAuth = () => {
@@ -21,12 +21,12 @@ export const useAuth = () => {
         location.pathname === "/onboarding" ||
         location.pathname === "/auth"
       ) {
-        navigate("/home");
+        navigate("/home", { replace: true });
         return;
       }
       return;
     }
-    navigate("/onboarding");
+    navigate("/onboarding", { replace: true });
   };
 
   const verifyAuth = () => {
@@ -38,7 +38,7 @@ export const useAuth = () => {
       redirectUserAuth();
       return;
     }
-    navigate("/onboarding");
+    navigate("/onboarding", { replace: true });
   };
 
   useEffect(() => {
