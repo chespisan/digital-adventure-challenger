@@ -1,13 +1,14 @@
 import { getDownloadURL, ref } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
 import { FirebaseService } from "../firebase";
+import { db, storage } from "../../config/firebase";
 import { IUseUser } from "../../common/hooks/use-user/interface";
-import { storage } from "../../config/firebase";
 import { IPhoto, IPhotoService } from "./interface";
 
 export class PhotoManagementService implements IPhotoService {
-  public static _instance: PhotoManagementService;
+  private static _instance: PhotoManagementService;
   private firebase: FirebaseService;
 
   constructor() {
@@ -19,7 +20,7 @@ export class PhotoManagementService implements IPhotoService {
     return this._instance;
   }
 
-  async uploadPhoto(file: Blob, user: IUseUser | undefined) {
+  async uploadPhoto(file: Blob | File, user: IUseUser | undefined) {
     try {
       const path = `${import.meta.env.VITE_FOLDER_BUCKET_FB}/${
         user?.username
@@ -34,6 +35,8 @@ export class PhotoManagementService implements IPhotoService {
         userId: user?.id,
         likes: 0,
         isShowGallery: true,
+        username: user?.username,
+        usersLikes: [],
       });
       return { message: "Foto guardada!" };
     } catch (error) {
@@ -50,6 +53,34 @@ export class PhotoManagementService implements IPhotoService {
       );
       return {
         galleryPhotos,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+      };
+    }
+  }
+
+  async addLikeToPhoto(photo: IPhoto, userId: string) {
+    try {
+      const photoRef = doc(db, import.meta.env.VITE_STORAGE_PHOTO_FB, photo.id);
+
+      let totalLikes: string[] = [];
+      let isDislike = false;
+
+      if (photo?.usersLike?.includes(userId)) {
+        isDislike = true;
+        totalLikes = photo.usersLike.filter((like) => like !== userId);
+      } else {
+        totalLikes = [...photo.usersLike, userId];
+      }
+
+      await updateDoc(photoRef, {
+        likes: isDislike ? photo.likes - 1 : photo.likes + 1,
+        usersLike: [...totalLikes],
+      });
+      return {
+        message: "Ohhh!",
       };
     } catch (error) {
       return {

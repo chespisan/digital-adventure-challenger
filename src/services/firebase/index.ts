@@ -41,6 +41,6 @@ export class FirebaseService {
         ...data.data(),
       });
     });
-    return res;
+    return res.reverse();
   }
 }

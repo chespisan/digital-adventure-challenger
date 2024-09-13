@@ -6,19 +6,22 @@ export interface IPhoto {
   path: string;
   likes: number;
   userId: string;
+  username: string;
+  usersLike: string[];
   isShowGallery: boolean;
+}
+
+export interface IResponsePhotoService {
+  message?: string;
+  isError?: boolean;
+  galleryPhotos?: IPhoto[];
 }
 
 export interface IPhotoService {
   uploadPhoto(
     file: Blob,
     user: IUseUser | undefined
-  ): Promise<{
-    message?: string;
-    isError?: boolean;
-  }>;
-  getAllGallery(): Promise<{
-    gallery?: IPhoto[];
-    isError?: boolean;
-  }>;
+  ): Promise<IResponsePhotoService>;
+  getAllGallery(): Promise<IResponsePhotoService>;
+  addLikeToPhoto(photo: IPhoto, userId: string): Promise<IResponsePhotoService>;
 }
