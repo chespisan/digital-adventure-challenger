@@ -46,7 +46,7 @@ export const AuthPage = () => {
     try {
       const userData: UserAuthExtends = await loginWithGoogle();
       setUserData(userData);
-      toast.success("Hola!");
+      toast.success("Hola! Bienvenido!");
     } catch (error) {}
   };
 
@@ -64,7 +64,7 @@ export const AuthPage = () => {
         data.password
       );
       setUserData(userData);
-      toast.success("Hola!");
+      toast.success("Hola!, Bienvenido");
     } catch (error) {
       if (error instanceof FirebaseError) {
         if (error.code === "auth/email-already-in-use") {

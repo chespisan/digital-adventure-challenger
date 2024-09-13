@@ -41,11 +41,10 @@ export const HomePage = () => {
       return;
     }
     getAllGallery();
-    toast.info(res?.message);
+    toast.success(res?.message);
   };
 
   useEffect(() => {
-    toast("Event has been created");
     getAllGallery();
   }, []);
 
