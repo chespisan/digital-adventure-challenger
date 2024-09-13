@@ -5,4 +5,6 @@ export interface IButtonComponent {
   color: TButton;
   action: () => void;
   disabled?: boolean;
+  isIcon?: boolean;
+  IconType?: JSX.Element;
 }
