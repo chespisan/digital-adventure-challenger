@@ -13,8 +13,6 @@ export const UploadPage = () => {
   const { user } = useUser();
 
   const uploadFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("upload file");
-
     if (event.target.files) {
       const file = event?.target?.files[0];
 
@@ -23,7 +21,7 @@ export const UploadPage = () => {
         toast.error("Ups, no se pudo guardar, intenta de nuevo");
         return;
       }
-      toast.info("Imagen guardada!");
+      toast.success("Imagen guardada!");
     }
   };
 

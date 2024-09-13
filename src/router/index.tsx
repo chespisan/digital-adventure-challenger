@@ -24,6 +24,7 @@ export const RouterApp = () => {
         !location.pathname.includes("/photo") && <MenuBarComponent />}
       {isShow && <ModalComponent />}
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="home" element={<HomePage />} />
         <Route path="upload" element={<UploadPage />} />
 
