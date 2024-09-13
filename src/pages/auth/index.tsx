@@ -44,10 +44,11 @@ export const AuthPage = () => {
       });
       const profile = {
         email: userData.user.email,
+        uid: userData.user.uid,
         isAuth: true,
       };
       setUserCookie("user", JSON.stringify(profile));
-      navigate("/home");
+      navigate("/home", { replace: true });
     } catch (error: any) {
       setErrorMessage("Email o contraseña incorrecta");
     }

@@ -1,0 +1,82 @@
+@import "../../common/styles/variables.scss";
+
+.photo {
+  background-color: $color-text;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &__close {
+    color: $color-secondary;
+    cursor: pointer;
+    position: absolute;
+    right: 26px;
+    top: 20px;
+    z-index: 999;
+
+    &-text {
+      font-size: 30px;
+    }
+  }
+
+  &__container-video {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    height: calc(100vh - 20%);
+  }
+
+  &__video {
+    height: 100vh;
+    width: 100%;
+  }
+
+  &__actions {
+    background-color: $color-text;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    height: 20%;
+    z-index: 999;
+  }
+
+  &__button-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    border: solid 3px white;
+    border-radius: 60px;
+    height: 60px;
+    width: 60px;
+
+    &--icon {
+      border: none;
+      border-radius: 60px;
+      color: $color-secondary;
+      height: 44px;
+      width: 44px;
+    }
+
+    &--close {
+      background-color: $color-danger;
+    }
+
+    &--check {
+      background: $color-primary;
+    }
+  }
+
+  &__icon-button {
+    font-size: 20px;
+  }
+
+  &__button--content {
+    background-color: white;
+    border-radius: 40px;
+    height: 46px;
+    width: 46px;
+  }
+}
