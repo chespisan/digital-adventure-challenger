@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useModalStore } from "../../context/hooks";
 
 export const useAuth = () => {
   const [userCookie] = useCookies(["user"]);
   const [tokenCookie] = useCookies(["access_token"]);
   const navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
+  const { toggleModal } = useModalStore((state) => state);
 
   const redirectUserProvitional = () => {
     if (location.pathname === "/auth") {
@@ -40,6 +42,26 @@ export const useAuth = () => {
     }
     navigate("/onboarding", { replace: true });
   };
+
+  const verifyRoutes = () => {
+    const listPublicRoutes = ["/home", "/auth", "/onboarding"];
+    let isVerify: boolean = true;
+    if (!listPublicRoutes.includes(location.pathname)) {
+      isVerify = false;
+      return;
+    }
+    return isVerify;
+  };
+
+  useEffect(() => {
+    if (!tokenCookie.access_token && userCookie.user && !verifyRoutes()) {
+      toggleModal({
+        title: "Ups!",
+        message: "Inicia sesion para poder acceder",
+      });
+      navigate("/home");
+    }
+  }, [location.pathname, tokenCookie.access_token]);
 
   useEffect(() => {
     verifyAuth();
