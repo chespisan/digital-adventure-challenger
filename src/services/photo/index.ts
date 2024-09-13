@@ -36,7 +36,7 @@ export class PhotoManagementService implements IPhotoService {
         likes: 0,
         isShowGallery: true,
         username: user?.username,
-        usersLikes: [],
+        usersLike: [],
       });
       return { message: "Foto guardada!" };
     } catch (error) {
@@ -67,6 +67,7 @@ export class PhotoManagementService implements IPhotoService {
 
       let totalLikes: string[] = [];
       let isDislike = false;
+      console.log("call?");
 
       if (photo?.usersLike?.includes(userId)) {
         isDislike = true;
@@ -83,6 +84,8 @@ export class PhotoManagementService implements IPhotoService {
         message: "Ohhh!",
       };
     } catch (error) {
+      console.log("error: ", error);
+
       return {
         isError: true,
       };
