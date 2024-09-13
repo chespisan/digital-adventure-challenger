@@ -84,7 +84,6 @@ export class PhotoManagementService implements IPhotoService {
         message: "Ohhh!",
       };
     } catch (error) {
-      toast.error("Ha ocurrido un error, intenta de nuevo");
       return {
         isError: true,
       };
