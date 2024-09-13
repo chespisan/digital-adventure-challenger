@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
+import { toast } from "sonner";
 
 import { useScreenSize, useUser } from "../../common/hooks";
 import { PhotoManagementService } from "../../services/photo";
@@ -66,7 +67,7 @@ export const PhotoManagementPage = () => {
     if (imageSrc) {
       let blobBin = atob(imageSrc.split(",")[1]);
       let array = [];
-      for (var i = 0; i < blobBin.length; i++) {
+      for (let i = 0; i < blobBin.length; i++) {
         array.push(blobBin.charCodeAt(i));
       }
       return new Blob([new Uint8Array(array)], { type: "image/jpg" });
@@ -78,11 +79,11 @@ export const PhotoManagementPage = () => {
     if (file) {
       const res = await photoManagementService.uploadPhoto(file, user);
       if (res?.isError) {
-        console.log("error: show notification!");
+        toast.success("No se pudo guardar, intenta de nuevo");
         removePhoto();
         return;
       }
-      console.log("Success: ", res?.message);
+      toast.info("Imagen guardada!");
     }
     removePhoto();
   };

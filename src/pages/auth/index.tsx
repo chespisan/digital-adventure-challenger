@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
+import { FaGoogle } from "react-icons/fa";
+import { FirebaseError } from "firebase/app";
+import { toast } from "sonner";
 
 import { ButtonComponent, InputComponent } from "../../common/components";
 import { AuthService } from "../../services/auth";
@@ -10,7 +13,7 @@ import { IFormInput } from "./interface";
 
 import "./auth.scss";
 
-const { login, register } = AuthService.getInstance();
+const { login, register, loginWithGoogle } = AuthService.getInstance();
 
 export const AuthPage = () => {
   const navigate = useNavigate();
@@ -26,6 +29,27 @@ export const AuthPage = () => {
 
   const toggleForm = (): void => setIsRegister(!isRegister);
 
+  const setUserData = (userData: UserAuthExtends) => {
+    setTokenCookie("access_token", userData.accessToken, {
+      expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30),
+    });
+    const profile = {
+      email: userData.user.email,
+      uid: userData.user.uid,
+      isAuth: true,
+    };
+    setUserCookie("user", JSON.stringify(profile));
+    navigate("/home", { replace: true });
+  };
+
+  const loginGoogle = async () => {
+    try {
+      const userData: UserAuthExtends = await loginWithGoogle();
+      setUserData(userData);
+      toast.success("Hola!");
+    } catch (error) {}
+  };
+
   const onSubmit: SubmitHandler<IFormInput> = async (data): Promise<void> => {
     let service;
     if (isRegister) {
@@ -39,17 +63,16 @@ export const AuthPage = () => {
         data.email,
         data.password
       );
-      setTokenCookie("access_token", userData.accessToken, {
-        expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30),
-      });
-      const profile = {
-        email: userData.user.email,
-        uid: userData.user.uid,
-        isAuth: true,
-      };
-      setUserCookie("user", JSON.stringify(profile));
-      navigate("/home", { replace: true });
-    } catch (error: any) {
+      setUserData(userData);
+      toast.success("Hola!");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/email-already-in-use") {
+          toast.error("Este email ya esta registrado");
+          return;
+        }
+      }
+      toast.error("Email o contraseña incorrecta");
       setErrorMessage("Email o contraseña incorrecta");
     }
   };
@@ -57,7 +80,15 @@ export const AuthPage = () => {
   return (
     <div className="sign">
       <div className="sign__form">
-        <h1 className="sign__title">Bienvenidos</h1>
+        <h1 className="sign__title">Bienvenido</h1>
+
+        <ButtonComponent
+          action={loginGoogle}
+          color="danger"
+          text="Login With Google"
+          isIcon={true}
+          IconType={<FaGoogle size={16} />}
+        />
 
         <form className="sign__inputs">
           <Controller
