@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+
+.menu-bar {
+  background-color: $color-secondary;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 40px;
+  position: fixed;
+  width: 100%;
+
+  &__icon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+}

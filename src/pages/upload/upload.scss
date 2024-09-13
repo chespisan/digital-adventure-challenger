@@ -1,0 +1,76 @@
+@import "../../common/styles/variables.scss";
+
+.upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 60px);
+
+  &__container-file {
+    background-color: $color-secondary;
+    border-radius: $border-radius-10;
+    padding: $padding-20;
+    height: 340px;
+    max-width: 600px;
+    width: 82%;
+  }
+
+  &__title {
+    color: $color-accent;
+    font-size: $font-size-lg;
+    text-align: center;
+  }
+
+  &__content {
+    background: #f4f4f457;
+    border-radius: $border-radius-10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 80%;
+    width: 100%;
+  }
+
+  &__icon {
+    color: $color-accent;
+    font-size: $font-size-xl;
+  }
+
+  &__text {
+    font-size: $font-size-md;
+  }
+
+  &__container-input {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    &::before {
+      background: $color-accent;
+      color: $color-secondary;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: $border-radius-20;
+      content: "Seleccionar";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    & input[type="file"] {
+      opacity: 0;
+      width: 200px;
+      height: 32px;
+      display: inline-block;
+    }
+  }
+}
+
+#upload-file::before {
+  content: "Seleccionar foto";
+}

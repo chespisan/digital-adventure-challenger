@@ -1,0 +1,39 @@
+@import "../../styles/variables.scss";
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.606);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+
+  &__container {
+    background-color: $color-secondary;
+    border-radius: $border-radius-20;
+    height: 200px;
+    padding: $padding-20;
+    width: 300px;
+  }
+
+  &__close {
+    color: $color-accent;
+    cursor: pointer;
+    font-size: $font-size-md;
+    text-align: end;
+  }
+
+  &__title {
+    color: $color-accent;
+    font-size: $font-size-lg;
+    text-align: center;
+  }
+
+  &__body {
+    color: $color-text;
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+}
