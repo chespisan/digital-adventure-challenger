@@ -2,14 +2,18 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
-import appFirebase from "../../config/firebase";
+import { GoogleAuthProvider } from "firebase/auth";
 
-import { UserAuthExtends } from "./interface";
+import appFirebase from "../../config/firebase";
+import { IAuthService, UserAuthExtends } from "./interface";
 
 const auth = getAuth(appFirebase);
 
-export class AuthService {
+const provider = new GoogleAuthProvider();
+
+export class AuthService implements IAuthService {
   private static _instance: AuthService;
 
   public static getInstance(): AuthService {
@@ -30,6 +34,17 @@ export class AuthService {
   async login(email: string, password: string): Promise<UserAuthExtends> {
     const data = await signInWithEmailAndPassword(auth, email, password);
     const accessToken = await data.user.getIdToken();
+    const response = {
+      user: data.user,
+      accessToken,
+    };
+    return response;
+  }
+
+  async loginWithGoogle(): Promise<UserAuthExtends> {
+    const data = await signInWithPopup(auth, provider);
+    const accessToken = await data.user.getIdToken();
+
     const response = {
       user: data.user,
       accessToken,
